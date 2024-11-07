@@ -42,5 +42,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          VERSION_NAME: ${{ $(date +'%y.%m.%d') }}
-          VERSION_CODE: ${{ $(date +'%y%m%d') }}
+          VERSION_NAME: ${{ (date +'%y.%m.%d') }}
+          VERSION_CODE: ${{ (date +'%y%m%d') }}
