@@ -1,6 +1,18 @@
 name: Release
 on:
   workflow_dispatch:
+    inputs:
+      version_name:
+        description: 'The version name to release. E.g. 24.12.31'
+        required: false
+        default: null
+      version_code:
+        description: 'The version code (numeric) to release. E.g. 241231'
+        required: false
+        default: null
+
+env:
+  IS_AUTO_CI_RELEASE: false
 
 jobs:
   empower-plant-release:
@@ -16,9 +28,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Enable auto CI release
+        if: inputs.version_name == null
+        run: echo "IS_AUTO_CI_RELEASE=true" >> $GITHUB_ENV
+
       - name: Run Deploy Script
         run: ./deploy_project.sh
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          VERSION_NAME: ${{ inputs.version_name }}
+          VERSION_CODE: ${{ inputs.version_code }}
