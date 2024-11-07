@@ -70,6 +70,13 @@ public class MyApplication extends Application {
             );
 
             options.setAttachThreads(true);
+            options.setEnableAppStartProfiling(true);
+            options.setEnablePerformanceV2(true);
+
+            // Currently under experimental options:
+            options.getExperimental().getSessionReplay().setSessionSampleRate(1.0);
+            options.getExperimental().getSessionReplay().setErrorSampleRate(1.0);
+
             options.setBeforeSend((event, hint) -> {
 
                 //Remove PII
@@ -104,6 +111,9 @@ public class MyApplication extends Application {
             });
         });
 
+        String[] allCustomerTypes = {"medium-plan", "large-plan", "small-plan", "enterprise"};
+        String customerType = allCustomerTypes[(int) (Math.random() * 4)];
+        Sentry.setTag("customerType", customerType);
         Sentry.setTag("se", SE);
 
         // Set User info on Sentry event using a random email
