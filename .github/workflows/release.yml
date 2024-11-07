@@ -33,11 +33,11 @@ jobs:
         run: echo "IS_AUTO_CI_RELEASE=true" >> $GITHUB_ENV
 
       - name: Run Deploy Script
-        run: ./deploy_project.sh ${{ inputs.version_name || (date +'%y.%m.%d') }}
+        run: ./deploy_project.sh ${{ inputs.version_name || $(date +'%y.%m.%d') }}
         shell: sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          VERSION_NAME: ${{ inputs.version_name || (date +'%y.%m.%d') }}
-          VERSION_CODE: ${{ inputs.version_code || (date +'%y%m%d') }}
+          VERSION_NAME: ${{ inputs.version_name || $(date +'%y.%m.%d') }}
+          VERSION_CODE: ${{ inputs.version_code || $(date +'%y%m%d') }}
 
